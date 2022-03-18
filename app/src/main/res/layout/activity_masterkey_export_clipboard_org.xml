@@ -89,16 +89,6 @@
                 android:text="kopiere den\nMasterkey in\ndie Zwischenablage"
                 android:textAllCaps="false" />
 
-            <Button
-                android:id="@+id/btnImportMasterkeyFromClipboard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="8dp"
-                android:text="importiere den\nMasterkey"
-                android:textAllCaps="false" />
-
         </LinearLayout>
 
         <TextView
