@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:isScrollContainer="true"
     android:orientation="vertical"
-    tools:context=".DatabaseImportFile">
+    tools:context=".DatabaseExportFile">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
-            android:text="Datenbank Import von Datei"
+            android:text="Export der Datenbank"
             android:textAlignment="center"
             android:textSize="@dimen/title_size"
             android:textStyle="bold" />
@@ -47,13 +47,13 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
-            android:text="Geben Sie ein Passwort für den Import ein (mindestens 4 Zeichen)"
+            android:text="Geben Sie ein Passwort für den Export ein (mindestens 4 Zeichen)"
             android:textAlignment="center"
             android:textSize="20sp" />
 
 
         <EditText
-            android:id="@+id/etPassphraseImport"
+            android:id="@+id/etPassphraseDatabaseExport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -70,24 +70,24 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnChooseImportFile"
+                android:id="@+id/btnExportDatabaseToFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:text="exportiere die\nDatenbank"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnSaveDatabaseToFile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="18dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
-                android:text="Auswahl der\nImportdatei"
-                android:textAllCaps="false" />
-
-            <Button
-                android:id="@+id/btnImportDatabaseFromFile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="8dp"
-                android:text="importiere die\nDatenbank"
+                android:text="speichere die\nDatenbank in\neine Datei"
                 android:textAllCaps="false" />
 
         </LinearLayout>
@@ -100,12 +100,12 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
-            android:text="Inhalt des Importes"
+            android:text="Inhalt des Exportes"
             android:textAlignment="center"
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/etDatabaseContentImport"
+            android:id="@+id/etDatabaseContentExport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

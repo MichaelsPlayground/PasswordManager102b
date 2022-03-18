@@ -210,6 +210,46 @@ public class Cryptography {
         }
     }
 
+    // ## version 1.0.2b ##
+    public static String encryptDatabaseAesGcmToBase64(char[] passphrase, String fileContent) {
+        if (masterKey.length < 32) return "";
+        // key derivation
+        SecretKeyFactory secretKeyFactory = null;
+        byte[] key;
+        byte[] salt = generateSalt32Byte();
+        byte[] nonce = generateRandomNonce();
+        try {
+            secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            KeySpec keySpec = new PBEKeySpec(passphrase, salt, fileImportIterations, 32 * 8);
+            key = secretKeyFactory.generateSecret(keySpec).getEncoded();
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            e.printStackTrace();
+            return "";
+        }
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+        GCMParameterSpec gcmParameterSpec = new GCMParameterSpec(16 * 8, nonce);
+        Cipher cipher = null;
+        try {
+            cipher = Cipher.getInstance("AES/GCM/NOPadding");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, gcmParameterSpec);
+            byte[] ciphertextWithTag = cipher.doFinal(fileContent.getBytes(StandardCharsets.UTF_8));
+            byte[] ciphertext = new byte[(ciphertextWithTag.length-16)];
+            byte[] gcmTag = new byte[16];
+            System.arraycopy(ciphertextWithTag, 0, ciphertext, 0, (ciphertextWithTag.length - 16));
+            System.arraycopy(ciphertextWithTag, (ciphertextWithTag.length-16), gcmTag, 0, 16);
+            String saltBase64 = base64Encoding(salt);
+            String nonceBase64 = base64Encoding(nonce);
+            String ciphertextBase64 = base64Encoding(ciphertext);
+            String gcmTagBase64 = base64Encoding(gcmTag);
+            return fileImportHeaderLine + "\n"
+                    + saltBase64 + ":" + nonceBase64 + ":" + ciphertextBase64 + ":" + gcmTagBase64
+                    + "\n" + fileImportFooterLine;
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
     public static String encryptMasterkeyAesGcmToBase64(char[] passphrase) {
         if (masterKey.length < 32) return "";
         // key derivation
